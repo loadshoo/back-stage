@@ -64,7 +64,8 @@
                     <span>王小虎</span> -->
                 </el-header>
                 <el-main>
-                    <articleStick :load="isLoading" :listData="listData"></articleStick>
+                    <router-view></router-view>
+                    <!-- <articleStick :load="isLoading" :listData="listData"></articleStick> -->
                 </el-main>
                 <el-header style="font-size: 12px"></el-header>
             </el-container>
@@ -73,60 +74,28 @@
 </template>
 <script>
 
-import {getArticle} from '../../config/apis.js';
-import article_stick from '../components/article_stick.vue'
-
 export default {
-    components: {
-        'articleStick': article_stick
-    },
     data() {
         return {
-            listData: [],
             screenHeight: '',
-            type: "article_index",
-            item: {
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            },
-            isLoading: true
+            type: 'article_index'
         }
     },
     mounted() {
-        this.getStickArticle();
-        // this.swithTab('article', 'index');
-        // this.screenWidth = document.body.clientWidth;
+        this.swithTab('article','index');
         this.screenHeight = window.innerHeight;
-        // console.log(this.screenHeight)
         window.onresize = () => {
             return (() => {
-                // this.screenWidth = document.body.clientWidth;
                 this.screenHeight = document.body.clientHeight;
             })();
         };
     },
     //实例方法
     methods: {
-        swithTab: function(tab, item) {
-            this.type = tab + '_' + item;
-            this.getStickArticle();
-            // setTimeout(() => {
-            //     this.item.type = item;
-            //     this.type = tab + '_' + item;
-            //     this.listData = Array(10).fill(this.item);
-            //     this.isLoading = false;
-            // }, 1000)
+        swithTab: function(item, cur) {
+            this.type = item+ '_' + cur;
+            this.$router.push('/stick');
         },
-        async getStickArticle() {
-            this.isLoading = true;
-            let params = {
-                stick: 1
-            };
-            let res = await getArticle(params);
-            this.listData =res.data;
-            this.isLoading = false;
-        }
     }
 }
 </script>

@@ -30,8 +30,6 @@ export default {
             if(userinfo.code === 0) {
                  localStorage.setItem('token', userinfo.data.token);
                  this.$router.go(-1);
-                 // console.log(this);
-                 // console.log(this)
             }
         },
     },
